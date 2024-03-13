@@ -1,7 +1,7 @@
 "use client";
 
 import axios from 'axios'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 
 import styles from './page.module.css'
 
@@ -10,18 +10,34 @@ function Home() {
   const [base64Img, setBase64Img] = useState(null);
   const [summary, setSummary] = useState(null);
 
-  const handleFileChange = (event) => {
+  const handleFileChange = (event: any) => {
     setFile(event.target.files[0]);
   };
 
-  const handleSubmit = async (event) => {
+  const sendPostRequest = async () => {
+    try {
+      const response = await axios.post("http://localhost:3335/upload", {
+        image: base64Img,
+      });
+      setSummary(response.data);
+    } catch (error) {
+      console.error("Error uploading file", error);
+    }
+  }
+
+  useEffect(() => {
+    base64Img && sendPostRequest()
+  }, [base64Img])
+
+
+  const handleSubmit = async (event: any) => {
     event.preventDefault();
     if (!file) return;
 
     const reader = new FileReader();
     reader.readAsDataURL(file);
 
-    const base64Data = await new Promise((resolve, reject) => {
+    await new Promise((resolve, reject) => {
       reader.onloadend = () => {
         const base64Data = reader.result && reader.result.split(",")[1];
         resolve(base64Data);
@@ -29,15 +45,6 @@ function Home() {
       };
       reader.onerror = reject;
     });
-
-    try {
-      const response = await axios.post("http://localhost:3333/upload", {
-        image: base64Img,
-      });
-      setSummary(response.data);
-    } catch (error) {
-      console.error("Error uploading file", error);
-    }
   };
 
   return (
@@ -50,9 +57,7 @@ function Home() {
           onChange={handleFileChange}
           className={styles.fileInput}
         />
-        <button type="submit" className={styles.uploadButton}>
-          Upload
-        </button>
+        <button type="submit" className={styles.uploadButton}>Upload</button>
       </form>
       {summary && (
         <div className={styles.summaryContainer}>
