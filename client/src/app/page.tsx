@@ -57,7 +57,7 @@ function Home() {
           onChange={handleFileChange}
           className={styles.fileInput}
         />
-        <button type="submit" className={styles.uploadButton}>Upload</button>
+        <button type="submit" className={styles.uploadButton}>Submit</button>
       </form>
       {summary && (
         <div className={styles.summaryContainer}>

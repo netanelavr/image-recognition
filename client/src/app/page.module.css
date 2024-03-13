@@ -1,7 +1,6 @@
 .container {
   max-width: 600px;
   margin: 0 auto;
-  padding: 20px;
   text-align: center;
   height: 100vh;
 }
@@ -41,9 +40,7 @@
 
 .summaryContainer {
   margin-top: 30px;
-  border: 1px solid #ccc;
   border-radius: 5px;
-  padding: 20px;
 }
 
 .summaryTitle {
