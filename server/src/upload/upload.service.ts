@@ -5,11 +5,11 @@ import { Injectable } from '@nestjs/common'
 @Injectable({})
 export class UploadService {
   getHello(): string {
-    return 'Hello World!'
+    return 'Hello World!';
   }
 
   async imageDescription(base64Img: string): Promise<string> {
-    const apiKey = '-----'
+    const apiKey = '----';
     const payload = {
       model: 'gpt-4-vision-preview',
       messages: [
@@ -30,7 +30,7 @@ export class UploadService {
         },
       ],
       max_tokens: 300,
-    }
+    };
 
     try {
       const response = await axios.post(
@@ -44,11 +44,12 @@ export class UploadService {
         },
       );
 
-      const imageDescription = response.data.choices[0].message.content
-      return imageDescription
+      const imageDescription = response.data.choices[0].message.content;
+      console.log(imageDescription);
+      return imageDescription;
     } catch (error) {
-      console.error('Error making request to OpenAI API', error)
-      return error
+      console.error('Error making request to OpenAI API', error);
+      return error;
     }
   }
 }

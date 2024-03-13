@@ -14,6 +14,6 @@ export class UploadController {
   @Post('upload')
   imageDescription(@Body() body: { image: string }): Promise<string> {
     const base64Img = body.image
-    return this.uploadService.imageDescription(base64Img)
+    return this.uploadService.imageDescription(base64Img);
   }
 }
